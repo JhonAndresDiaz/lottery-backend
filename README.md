@@ -1,8 +1,17 @@
-# 🎫 Lottery Backend System - Spring Boot
+# Lottery Backend System - Spring Boot
 
 ## Descripción del Proyecto
 
 Sistema backend completo para la gestión de venta de billetes de lotería, desarrollado como prueba técnica para Konex Innovation. Proporciona una API RESTful para administrar sorteos, clientes y transacciones de venta.
+
+### **Características principales:**
+- Gestión completa de sorteos con estadísticas en tiempo real
+- Registro de clientes con validación de email único
+- Control de billetes con estados (DISPONIBLE/VENDIDO)
+- Proceso de venta robusto con prevención de duplicados
+- API RESTful documentada con Swagger
+- Base de datos H2 en memoria con datos de ejemplo
+- **Ejecución con Docker en un solo comando**
 
 - - -
 
@@ -10,12 +19,9 @@ Sistema backend completo para la gestión de venta de billetes de lotería, desa
 
 ### Arquitectura Hexagonal (Ports & Adapters)
 
-
 * APPLICATION LAYER                        
 * DOMAIN LAYER (Core)                     
 * INFRASTRUCTURE LAYER                       
-
-    
 
 ### Ventajas
 
@@ -43,7 +49,7 @@ Sistema backend completo para la gestión de venta de billetes de lotería, desa
 
 - - -
 
-## 📁 Estructura del Proyecto (COMPATIBLE CON GITHUB)
+## Estructura del Proyecto (COMPATIBLE CON GITHUB)
 
 - **`domain/`** - Capa de dominio (Arquitectura Hexagonal)
   - **`model/`** - Entidades y objetos de valor
@@ -65,9 +71,7 @@ Sistema backend completo para la gestión de venta de billetes de lotería, desa
 - **`resources/`** - Recursos de la aplicación
   - **`application.properties`** - Configuración
   - **`data.sql`** - Datos de prueba
-
-- **`test/`** - Pruebas unitarias e integrales
-
+ 
 - - -
 
 Explicación más detallada de las Capas:
@@ -108,21 +112,21 @@ Explicación más detallada de las Capas:
 
 - - -
 
-## 🔧 Funcionalidades Implementadas
+## Funcionalidades Implementadas
 
-### 🧩 Módulo de Sorteos
+### Módulo de Sorteos
 
 *   `GET /api/sorteos`
 *   `GET /api/sorteos/{id}`
 *   `POST /api/sorteos`
 
-### 🧩 Módulo de Clientes
+### Módulo de Clientes
 
 *   `GET /api/clientes`
 *   `GET /api/clientes/{id}`
 *   `POST /api/clientes`
 
-### 🧩 Módulo de Billetes
+### Módulo de Billetes
 
 *   `GET /api/billetes`
 *   `GET /api/billetes/{id}`
@@ -134,7 +138,7 @@ Explicación más detallada de las Capas:
 
 - - -
 
-## 🚀 Ejecución del Proyecto
+## Ejecución del Proyecto
 
 ### Requisitos
 
@@ -142,24 +146,67 @@ Explicación más detallada de las Capas:
 *   Maven 3.9+
 *   Puerto 8080 libre
 
-### Clonar y compilar
+## Ejecución con Docker 🐳
 
-```
+### **Opción 1: Script Automático** 
+
+El proyecto incluye scripts que hacen TODO automáticamente.
+
+#### **Linux / macOS:**
+```bash
+# 1. Clonar el repositorio
 git clone https://github.com/JhonAndresDiaz/lottery-backend.git
 cd lottery-backend
-mvn clean compile
+
+# 2. Dar permisos de ejecución
+chmod +x start-docker.sh
+
+# 3. Ejecutar (hace todo automáticamente)
+./start-docker.sh
 ```
 
-### Ejecutar
+#### **Windows:**
+```bash
+# 1. Clonar el repositorio
+git clone https://github.com/JhonAndresDiaz/lottery-backend.git
+cd lottery-backend
 
+# 2. Ejecutar (doble click o desde CMD/PowerShell)
+start-docker.bat
 ```
+
+**El script automáticamente:**
+1. Verifica que Docker esté instalado y corriendo
+2. Limpia contenedores previos
+3. Compila el proyecto con Maven
+4. Construye la imagen Docker optimizada
+5. Ejecuta la aplicación Spring Boot
+6. Carga los datos de ejemplo en H2
+7. Expone el puerto 8080
+   
+- - -
+
+### **Opción 2: Ejecución Manual**
+
+Si prefieres ejecutar sin Docker (requiere Java 17 y Maven instalados):
+
+### **Requisitos:**
+- Java JDK 17 o superior
+- Maven 3.9+
+- Puerto 8080 libre
+
+### **Pasos:**
+
+```bash
+# 1. Clonar el repositorio
+git clone https://github.com/JhonAndresDiaz/lottery-backend.git
+cd lottery-backend
+
+# 2. Compilar el proyecto
+mvn clean install
+
+# 3. Ejecutar la aplicación
 mvn spring-boot:run
-```
-
-### Verificar
-
-```
-curl http://localhost:8080/api/sorteos
 ```
 
 - - -
@@ -172,14 +219,16 @@ http://localhost:8080/api/docs
 
 **H2 Console:**
 
+```bash
 http://localhost:8080/h2-console
 JDBC URL: jdbc:h2:mem:lotterydb
 User: sa
 Password: (vacío)
+```
 
 - - -
 
-## 🎯 Reglas de Negocio
+## Reglas de Negocio
 
 #### Sorteos
 
@@ -201,8 +250,9 @@ Password: (vacío)
 
 - - -
 
-## 🛡️ Manejo de Errores
+## Manejo de Errores
 
+```bash
 {
   "timestamp": "2025-11-09T14:30:00",
   "status": 409,
@@ -211,18 +261,18 @@ Password: (vacío)
   "errors": \[\],
   "path": "/api/billetes/vender"
 }
-    
+```
 - - -
 
-## 📦 Datos Precargados
+## Datos Precargados
 
 *   4 Sorteos
 *   5 Clientes
-*   40 Billetes (32 disponibles / 8 vendidos)
+*   31 Billetes (8 vendidos)
 
 - - -
 
-## 📈 Métricas Automáticas
+## Métricas Automáticas
 
 *   Sorteos: vendidos/disponibles
 *   Clientes: compras totales
