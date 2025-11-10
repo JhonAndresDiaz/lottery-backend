@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  lottery-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: lottery-backend
+    image: lottery-backend:latest
+    ports:
+      - "8080:8080"
+    environment:
+      # Configuración de Spring Boot
+      - SPRING_PROFILES_ACTIVE=default
+      - JAVA_OPTS=-Xms256m -Xmx512m
+
+      # Configuración de H2
+      - SPRING_DATASOURCE_URL=jdbc:h2:mem:lotterydb
+      - SPRING_DATASOURCE_USERNAME=sa
+      - SPRING_DATASOURCE_PASSWORD=
+
+      # JPA
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=create-drop
+      - SPRING_JPA_SHOW_SQL=true
+
+      # H2 Console
+      - SPRING_H2_CONSOLE_ENABLED=true
+
+      # Inicialización de datos
+      - SPRING_SQL_INIT_MODE=always
+
+    # Restart policy
+    restart: unless-stopped
+
+    # Logs
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+    # Red
+    networks:
+      - lottery-network
+
+networks:
+  lottery-network:
+    driver: bridge
+    name: lottery-network

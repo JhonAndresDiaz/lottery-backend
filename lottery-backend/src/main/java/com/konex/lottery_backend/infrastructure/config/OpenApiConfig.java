@@ -24,15 +24,10 @@ public class OpenApiConfig {
         localServer.setUrl("http://localhost:8080");
         localServer.setDescription("Servidor local");
 
-        Contact contact = new Contact();
-        contact.setName("Konex Innovation");
-        contact.setEmail("desarrollo@konex.com");
-
         Info info = new Info()
                 .title("API Sistema de Lotería")
                 .version("1.0.0")
-                .description("API REST para venta de billetes de lotería")
-                .contact(contact);
+                .description("API REST para venta de billetes de lotería");
 
         return new OpenAPI()
                 .info(info)
